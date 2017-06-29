@@ -12,3 +12,8 @@ RUN apt-get update
 RUN apt-get -y install mapr-client mapr-spark nfs-common
 RUN mkdir /mapr
 RUN /opt/mapr/server/configure.sh -N ${mapr_name} -c -C ${mapr_host}
+RUN groupadd -g 5000 mapr
+RUN useradd -g 5000 -u 5000 -p mapr mapr
+RUN echo "10.3.64.101 node1 cluster1" >> /etc/hosts
+RUN echo "10.3.64.102 node2 cluster2" >> /etc/hosts
+RUN mount -o nolock 10.3.64.102:/mapr /mapr
